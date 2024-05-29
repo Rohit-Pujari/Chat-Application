@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- chat/templates/chat/home.html -->
+<div class='row row-gap-3 ms-3'>
+  <div class="jumbotron mt-4">
+    <h1 class="display-4">Welcome to MeChat!</h1>
+    <p class="lead">
+      This is a simple chat application built with Django and Bootstrap for Styling the Webpages.
+      This is a simple application that uses simple Database models to store messages into our Database. We use SQLite Database for Storing your Messages. 
+    </p>
+    <hr class="my-4" />
+    <p>
+      This application uses Django Web Framework, Learn more about Django by clicking below
+    </p>
+    <a class="btn btn-primary btn-lg" href="https://www.djangoproject.com/" role="button">Learn more</a>
+    <p class='mt-1'>
+      This application uses Bootstrap for styling the Webpages, Learn more about Bootstrap by clicking below
+    </p>
+    <a class="btn btn-primary btn-lg" href="https://getbootstrap.com/" role="button">Learn more</a>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <h2>Feature 1</h2>
+      <p>Details about the first amazing feature of your chat app.</p>
+      <a class="btn btn-secondary" href="#" role="button"
+        >View details &raquo;</a
+      >
+    </div>
+    <div class="col-md-4">
+      <h2>Feature 2</h2>
+      <p>Details about the second amazing feature of your chat app.</p>
+      <a class="btn btn-secondary" href="#" role="button"
+        >View details &raquo;</a
+      >
+    </div>
+    <div class="col-md-4">
+      <h2>Feature 3</h2>
+      <p>Details about the third amazing feature of your chat app.</p>
+      <a class="btn btn-secondary" href="#" role="button"
+        >View details &raquo;</a>
+    </div>
+  </div>
+</div>
+{% endblock content %}
