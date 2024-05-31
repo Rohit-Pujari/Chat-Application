@@ -114,6 +114,9 @@
                   </div>
                   {% endif %}
                   <div class="mb-3">
+                    <p for="group-members" class="form-label">Created: {{chatroom.created_at|naturaltime}} </p>
+                  </div>
+                  <div class="mb-3">
                     <p for="group-members" class="form-label">Group Members</p>
                     <div class="ms-lg-5">
                         {% for member in chatroom.members.all  %}
