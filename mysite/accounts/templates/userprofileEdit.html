@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid mt-5">
+    <div class='card shadow-lg'>
+        <div class="card-header bg-secondary text-white fs-2">
+            Edit your Profile
+        </div>
+        <form class='card-body' action="" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Username</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="username" aria-describedby="emailHelp" required>
+            </div>
+            <div class="m-3">
+                <label for="exampleInputEmail1" class="form-label">Bio</label>
+                <textarea type="text" class="form-control" rows="10" name="bio" required></textarea>
+            </div>
+            <div class="m-3">
+                <label for="exampleInputPassword1" class="form-label">Profile Picture</label>
+                <input type="file" class="form-control" id="exampleInputPassword1" name="image" required>
+            </div>
+            <button type="submit" class="m-2 btn btn-secondary">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}
