@@ -90,7 +90,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-9 h-500">
+            <div class="col-md-9">
                 {% if room_name is not None %}
                 <!-- Chat Box -->
                 <div class="card  shadow-lg">
@@ -100,10 +100,11 @@
                     </div>
                     {% else %}
                     <div class="card-header bg-secondary text-white">
-                        <h5>{{room_name}}</h5>
+                        <button class="btn btn-secondary"><a class='text-white' href='{% url "userprofile" room_name %}'>{{room_name}}</a></button>
                     </div>
                     {% endif %}
-                    <div class="card-body" style="height:400px;" id="chat-log"></div>
+                    <div class="card-body" style="height:400px; overflow-y: auto;" id="chat-log">
+                    </div>
                     <div class="card-footer">
                         <input class='col-md-11' id="chat-message-input" type="text">
                         <input class="btn btn-secondary" id="chat-message-submit" type="button" value="Send">

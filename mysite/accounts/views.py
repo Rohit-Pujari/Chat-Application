@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.db import IntegrityError
 from .models import *
 from .forms import *
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def logIn(request):
     if request.method == 'POST':
@@ -57,6 +58,7 @@ def logOut(request):
     messages.success(request,"You have Logged-out Succesfuly!")
     return render(request,"index.html")
 
+@login_required(login_url='Log-in')
 def userprofileEdit(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -64,10 +66,10 @@ def userprofileEdit(request):
         profile_pic = request.FILES.get("image")
         user = request.user
         try:
-            userprofile, created = UserProfile.objects.get_or_create(user=user)
+            userprofile, created = Profile.objects.get_or_create(user=user)
             userprofile.bio = bio
             if profile_pic:
-                userprofile.picture = profile_pic
+                userprofile.image = profile_pic
             userprofile.save()
             user.username = username
             user.save()
@@ -77,10 +79,10 @@ def userprofileEdit(request):
             return redirect('home')
     return render(request,'userprofileEdit.html')
 
+@login_required(login_url='Log-in')
 def userprofile(request,username):
     user = User.objects.get(username=username)
-    userprofile = UserProfile.objects.get(user=user)
     context = {
-        'user':userprofile
+        'user':user
     }
     return render(request,'userProfile.html',context)
