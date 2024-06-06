@@ -9,11 +9,11 @@
             {% csrf_token %}
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Username</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name="username" aria-describedby="emailHelp" required>
+                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="{{user.username}} is your current Username" name="username" aria-describedby="emailHelp" required>
             </div>
             <div class="m-3">
                 <label for="exampleInputEmail1" class="form-label">Bio</label>
-                <textarea type="text" class="form-control" rows="10" name="bio" required></textarea>
+                <textarea type="text" class="form-control" rows="10" name="bio" placeholder="{{user.profile.bio}}" required></textarea>
             </div>
             <div class="m-3">
                 <label for="exampleInputPassword1" class="form-label">Profile Picture</label>

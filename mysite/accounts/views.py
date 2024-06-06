@@ -47,6 +47,8 @@ def signUp(request):
         user = User.objects.create_user(username=username,email=email,first_name=firstname,last_name=lastname)
         user.set_password(password1)
         user.save()
+        profile = Profile.create(user=user)
+        profile.save()
         login(request,user)
         return redirect('chatbox')
 

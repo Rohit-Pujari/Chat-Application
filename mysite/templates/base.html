@@ -32,11 +32,9 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hello! {{ user.username }}</a>
                 <ul class="dropdown-menu">
+
                   <li>
-                    <a class="dropdown-item" href="{% url "chatbox" %}">ChatBox!</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="{% url "userprofileEdit"%}">Edit Profile</a>
+                    <a class="dropdown-item" href="{% url "userprofile" user.username%}">Your Profile!</a>
                   </li>
                   <li>
                     <a class="dropdown-item" href="{% url "logout" %}">Log-out!</a>

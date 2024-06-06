@@ -106,7 +106,7 @@
                     </div>
                     {% else %}
                     <div class="card-header bg-secondary text-white">
-                        <img src="{{chatroom.image.url}}" style="height:50;width: 50px;" class="border border-dark col-md-1 rounded-circle" alt="">
+                        <img src="{{chatroom.image.url}}" style="height:50;width: 50px;" class="border border-dark-subtle col-md-1 rounded-circle" alt="">
                         <button class="btn btn-secondary"><a class='text-white' href='{% url "userprofile" room_name %}'>{% if chatroom.members.last == user %}{{chatroom.members.first.username}}{% else %}{{chatroom.name}}{% endif %}</a></button>
                     </div>
                     {% endif %}
