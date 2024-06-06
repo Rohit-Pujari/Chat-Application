@@ -12,9 +12,9 @@
                     <ul class="list-group list-group-flush">
                         {% for room in rooms %}
                         <li class="list-group-item " {% if room.name == room_name %} style='background-color:aliceblue;' {%endif %}>
-                            <a href="{% url "chatroom" room.name %}" class="text-decoration-none text-dark">{{room.name}}</a>
+                            <a href="{% url "chatroom" room.name %}" class="text-decoration-none text-dark">{% if not room.is_group %}{% if room.members.last == user %}{{room.members.first.username}}{% else %}{{room.name}}{% endif %}{% endif %}</a>
                         </li>
-                        {%endfor%}
+                        {% endfor %}
                     </ul>
                     <div class="m-2">
                         <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#MessageUserModal">
@@ -68,6 +68,11 @@
                                     <form method="post" action="{% url "createGroup" %}">
                                         {% csrf_token %}
                                         <div class="mb-3">
+                                            <label for="group-name" class="form-label">Group Picture: </label>
+                                            <input type="file" class="form-control" id="group-name" name="groupname"
+                                                placeholder="Enter Group Name">
+                                        </div>
+                                        <div class="mb-3">
                                             <label for="group-name" class="form-label">Group Name</label>
                                             <input type="text" class="form-control" id="group-name" name="groupname"
                                                 placeholder="Enter Group Name" required>
@@ -102,7 +107,7 @@
                     {% else %}
                     <div class="card-header bg-secondary text-white">
                         <img src="{{chatroom.image.url}}" class="col-md-1 rounded account-img" alt="">
-                        <button class="btn btn-secondary"><a class='text-white' href='{% url "userprofile" room_name %}'>{{room_name}}</a></button>
+                        <button class="btn btn-secondary"><a class='text-white' href='{% url "userprofile" room_name %}'>{% if chatroom.members.last == user %}{{chatroom.members.first.username}}{% else %}{{chatroom.name}}{% endif %}</a></button>
                     </div>
                     {% endif %}
                     <div class="card-body" style="height:400px; overflow-y: auto;" id="chat-log">

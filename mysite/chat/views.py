@@ -23,7 +23,7 @@ def index(request):
 def room(request, room_name):
     chatrooms = request.user.chatrooms.all()
     if chatrooms.exists():
-        chatroom = ChatRoom.objects.filter(name=room_name)
+        chatroom = ChatRoom.objects.get(name=room_name)
     else:
         chatroom = None
     context = {
