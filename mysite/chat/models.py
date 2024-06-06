@@ -7,6 +7,7 @@ class ChatRoom(models.Model):
     is_group = models.BooleanField(default=False)
     members = models.ManyToManyField(User, related_name='chatrooms')
     created_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='chat/',default='defaultuser.jpeg')
 
     def __str__(self):
         if not self.is_group:

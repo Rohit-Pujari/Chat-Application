@@ -23,12 +23,13 @@ def index(request):
 def room(request, room_name):
     chatrooms = request.user.chatrooms.all()
     if chatrooms.exists():
-        chatroom = chatrooms.first()
+        chatroom = ChatRoom.objects.filter(name=room_name)
     else:
-        messages=None
+        chatroom = None
     context = {
         'rooms':chatrooms,
         'room_name':room_name,
+        'chatroom':chatroom
     }
     return render(request, "chat/chatbox.html",context)
 

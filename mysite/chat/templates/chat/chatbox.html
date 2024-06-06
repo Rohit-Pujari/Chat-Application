@@ -96,17 +96,19 @@
                 <div class="card  shadow-lg">
                     {% if chatroom.is_group %}
                     <div class="card-header bg-secondary">
-                        <button class="text-white">{{room_name}}</button>
+                        <img src="{{chatroom.image.url}}" class="col-md-1 rounded account-img" alt="">
+                        <button class="btn btn-secondary">{{room_name}}</button>
                     </div>
                     {% else %}
                     <div class="card-header bg-secondary text-white">
+                        <img src="{{chatroom.image.url}}" class="col-md-1 rounded account-img" alt="">
                         <button class="btn btn-secondary"><a class='text-white' href='{% url "userprofile" room_name %}'>{{room_name}}</a></button>
                     </div>
                     {% endif %}
                     <div class="card-body" style="height:400px; overflow-y: auto;" id="chat-log">
                     </div>
                     <div class="card-footer">
-                        <input class='col-md-11' id="chat-message-input" type="text">
+                        <input class='col-md-10' id="chat-message-input" type="text">
                         <input class="btn btn-secondary" id="chat-message-submit" type="button" value="Send">
                         <div>
                             <div>

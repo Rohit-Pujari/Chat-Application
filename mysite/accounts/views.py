@@ -83,6 +83,6 @@ def userprofileEdit(request):
 def userprofile(request,username):
     user = User.objects.get(username=username)
     context = {
-        'user':user
+        'userp':user
     }
     return render(request,'userProfile.html',context)

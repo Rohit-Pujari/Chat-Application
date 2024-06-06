@@ -1,13 +1,29 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div class="content-section">
-    <div class="media">
-            <img src="{{user.profile.image.url}}" style="height: 100px; width: 100px;" alt="" class="rounded-circle account-img">
-        <div class="media-body">
-            <h2 class="account-heading">{{ user.username }}</h2>
-            <p class="text-secondary">{{ user.profile.bio }}</p>
+<div class="d-grid justify-content-around mt-5" >
+    <div class="border bg-body-tertiary p-3 shadow-lg" >
+    <card class="p-4">
+        <div class="card-header">
+            <img src="{{userp.profile.image.url}}" alt="" class="rounded account-img">
+            <hr>
         </div>
+      <div class="mb-3">
+        <label for="email">Username: </label>
+        <span id="email" class=''>{{userp.username}}</span>
+        <hr>
+      </div>
+      <div class="mb-3">
+        <label for="email">Bio: </label>
+        <span id="email" class=''>{% if userp.profile.bio %}{{userp.profile.bio}}{% endif %}</span>
+        <hr>
+      </div>
+      {% if user.username == userp.username %}
+      <div class="card-footer">
+        <a href="{% url "userprofileEdit" %}">Edit your Profile</a>
+      </div>
+      {% endif %}
+    </card>
     </div>
-</div>
+  </div>
 {% endblock content %}
