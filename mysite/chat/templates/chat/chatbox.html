@@ -2,10 +2,10 @@
 {% block Chatbox_active %}active{% endblock Chatbox_active %}
 {% block content %}
 <div class="container-fluid mt-5">
-    <div class="row">
+    <div class="row justify-content-center">
         <!-- Sidebar for Chat Rooms -->
             <div class="col-md-2">
-                <div class="card shadow-lg">
+                <div class="card border border-dark-subtle shadow-lg">
                     <div class="card-header bg-secondary text-white">
                         <h5>Inbox</h5>
                     </div>
@@ -95,18 +95,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9 " style="width: 1250px;">
                 {% if room_name is not None %}
                 <!-- Chat Box -->
-                <div class="card  shadow-lg">
+                <div class="card border border-dark-subtle  shadow-lg">
                     {% if chatroom.is_group %}
                     <div class="card-header bg-secondary">
-                        <img src="{{chatroom.image.url}}" class="col-md-1 rounded account-img" alt="">
+                        <img src="{{chatroom.image.url}}" class="border border-dark-subtle col-md-1 rounded-circle" alt="">
                         <button class="btn btn-secondary">{{room_name}}</button>
                     </div>
                     {% else %}
                     <div class="card-header bg-secondary text-white">
-                        <img src="{{chatroom.image.url}}" class="col-md-1 rounded account-img" alt="">
+                        <img src="{{chatroom.image.url}}" style="height:50;width: 50px;" class="border border-dark col-md-1 rounded-circle" alt="">
                         <button class="btn btn-secondary"><a class='text-white' href='{% url "userprofile" room_name %}'>{% if chatroom.members.last == user %}{{chatroom.members.first.username}}{% else %}{{chatroom.name}}{% endif %}</a></button>
                     </div>
                     {% endif %}
@@ -145,7 +145,9 @@ chatSocket.onmessage = function (e) {
     const messageClass = data.username === currentUser ? 'msg_cotainer_send' : 'msg_cotainer';
     const timeClass = data.username === currentUser ? 'msg_time_send' : 'msg_time';
     const alignmentClass = data.username === currentUser ? 'justify-content-end' : 'justify-content-start';
-    chatLog.innerHTML += `<div class="d-flex ${alignmentClass} mb-4"><div class="fs-4 ${messageClass}"><p>${data.message}<span class="text-muted fs-6 ${timeClass}">${data.timestamp}</span></p></div></div>`;
+    const bgClass = data.username === currentUser ? 'bg-transperent':'bg-secondary';
+    const userImage = data.username === currentUser ? ``:`<img src="${data.user_pic}" style="height:50px;width:50px;" class="border border-dark-subtle rounded-circle shadow-4-strong me-1" alt="userprofilepicture">`;
+    chatLog.innerHTML += `<div class="d-flex m-1 ${alignmentClass}">${userImage}<div class="d-flex p-1 ${bgClass} border border-dark-subtle rounded-pill " style="font-size:10px; height:50px; width:fit-content;" ><div class=" fs-4 ${messageClass}"><p class="fs-5">${data.message}  <span class="text-muted fs-6 ${timeClass}">${data.timestamp}</span></p></div></div></div>`;
     chatLog.scrollTop = chatLog.scrollHeight;  // Scroll to the bottom
     };
 chatSocket.onclose = function (e) {

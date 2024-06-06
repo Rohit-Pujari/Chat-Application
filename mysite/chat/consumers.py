@@ -30,7 +30,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.send(text_data=json.dumps({
                 'message': message['content'],
                 'username': message['username'],
-                'timestamp': message['timestamp']
+                'timestamp': message['timestamp'],
+                'user_pic': message['user_pic']
             }))
 
     @database_sync_to_async
@@ -39,7 +40,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
             {
                 'content': message.content,
                 'username': message.sender.username,
-                'timestamp': message.timestamp.strftime("%d-%m-%Y %H:%M")
+                'timestamp': message.timestamp.strftime("%d-%m-%Y %H:%M"),
+                'user_pic': message.sender.profile.image.url
             } 
             for message in Message.objects.filter(room=chatroom)
         ]
