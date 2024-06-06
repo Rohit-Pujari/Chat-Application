@@ -2,16 +2,8 @@
 {% load forms_filters %}
 {% block title %}Log-in{% endblock title %}
 {% block content %}
-<div class="bg-body-tertiary">
-  {% for message in messages  %}
-  <div class="alert alert-{{message.tags}} alert-dismissible mb-0 fade show" role="alert">
-    <strong>Message :</strong> {{message}}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-  {% endfor %}
-</div>
 <div class="d-grid justify-content-around mt-5 text-black" >
-  <div class="border bg-body-tertiary p-3 shadow-lg" style="height: fit-content;">
+  <div class="border border-dark bg-body-tertiary p-3 shadow-lg" style="height: fit-content;">
     <form class="p-4" method="post" action="{% url "SignUp" %}">
         {% csrf_token %}
         <h1><center>Register your Account</center></h1>
