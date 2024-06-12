@@ -56,7 +56,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
         if message:
-            chatroom = await database_sync_to_async(ChatRoom.objects.get)(name=self.room_name)
+            chatroom = await database_sync_to_async(ChatRoom.objects.filter)(name=self.room_name)
             message_obj = await database_sync_to_async(Message.objects.create)(
                 sender=self.scope['user'],
                 room=chatroom,

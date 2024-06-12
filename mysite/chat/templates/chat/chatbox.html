@@ -4,132 +4,138 @@
 <div class="container-fluid mt-5">
     <div class="row justify-content-center">
         <!-- Sidebar for Chat Rooms -->
-            <div class="col-md-2">
-                <div class="card border border-dark-subtle shadow-lg">
-                    <div class="card-header bg-secondary text-white">
-                        <h5>Inbox</h5>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        {% for room in rooms %}
-                        <li class="list-group-item " {% if room.name == room_name %} style='background-color:aliceblue;' {%endif %}>
-                            <a href="{% url "chatroom" room.name %}" class="text-decoration-none text-dark">{% if not room.is_group %}{% if room.members.last == user %}{{room.members.first.username}}{% else %}{{room.name}}{% endif %}{% endif %}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    <div class="m-2">
-                        <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#MessageUserModal">
-                            Message User
-                        </button>
-                    </div>
-                    <!-- Message User Modal -->
-                    <div class="modal fade" id="MessageUserModal" tabindex="-1" aria-labelledby="MessageUserModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="MessageUserModalLabel">Message User</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form method="post" action="{% url "messageUser" %}">
-                                        {% csrf_token %}
-                                        <div class="mb-3">
-                                            <label for="username" class="form-label">Username</label>
-                                            <input type="text" class="form-control" id="username" name="username"
-                                                placeholder="Enter the Username" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="message" class="form-label">Message</label>
-                                            <textarea class="form-control" id="message" rows="3"
-                                                placeholder="Enter your message" name="message" required></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="m-2">
-                        <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#GroupModal">Create
-                            Group</button>
-                    </div>
-                    <!-- Create Group Modal -->
-                    <div class="modal fade" id="GroupModal" tabindex="-1" aria-labelledby="GroupModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="GroupModalLabel">Create Group</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form method="post" action="{% url "createGroup" %}">
-                                        {% csrf_token %}
-                                        <div class="mb-3">
-                                            <label for="group-name" class="form-label">Group Picture: </label>
-                                            <input type="file" class="form-control" id="group-name" name="groupname"
-                                                placeholder="Enter Group Name">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="group-name" class="form-label">Group Name</label>
-                                            <input type="text" class="form-control" id="group-name" name="groupname"
-                                                placeholder="Enter Group Name" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="group-members" class="form-label">Group Description</label>
-                                            <input type="text" class="form-control" id="group-members" name="description"
-                                                placeholder="(optional)">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="group-members" class="form-label">Add Members</label>
-                                            <input type="text" class="form-control" id="group-members" name="members"
-                                                placeholder="Enter usernames separated by commas" required>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Create</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="col-md-2">
+            <div class="card border border-dark-subtle shadow-lg">
+                <div class="card-header bg-secondary text-white">
+                    <h5>Inbox</h5>
                 </div>
-            </div>
-            <div class="col-md-9 " style="width: 1250px;">
-                {% if room_name is not None %}
-                <!-- Chat Box -->
-                <div class="card border border-dark-subtle  shadow-lg">
-                    {% if chatroom.is_group %}
-                    <div class="card-header bg-secondary">
-                        <img src="{{chatroom.image.url}}" class="border border-dark-subtle col-md-1 rounded-circle" alt="">
-                        <button class="btn btn-secondary">{{room_name}}</button>
-                    </div>
-                    {% else %}
-                    <div class="card-header bg-secondary text-white">
-                        <img src="{{chatroom.image.url}}" style="height:50;width: 50px;" class="border border-dark-subtle col-md-1 rounded-circle" alt="">
-                        <button class="btn btn-secondary"><a class='text-white' href='{% url "userprofile" room_name %}'>{% if chatroom.members.last == user %}{{chatroom.members.first.username}}{% else %}{{chatroom.name}}{% endif %}</a></button>
-                    </div>
-                    {% endif %}
-                    <div class="card-body" style="height:400px; overflow-y: auto;" id="chat-log">
-                    </div>
-                    <div class="card-footer">
-                        <input class='col-md-10' id="chat-message-input" type="text">
-                        <input class="btn btn-secondary" id="chat-message-submit" type="button" value="Send">
-                        <div>
-                            <div>
+                <ul class="list-group list-group-flush">
+                    {% for room in rooms %}
+                    <li class="list-group-item " {% if room.name == room_name %} style='background-color:aliceblue;' {% endif %}>
+                        {% if not room.is_group %}
+                            {% if room.members.last == user %}
+                                <img src="{{ room.members.first.profile.image.url }}" style="height:60px;width: 60px;" class="border border-dark-subtle col-md-1 rounded-circle" alt="">
+                            {% else %}
+                                <img src="{{ room.members.last.profile.image.url }}" style="height:60px;width: 60px;" class="border border-dark-subtle col-md-1 rounded-circle" alt="">
+                            {% endif %}
+                        {% else %}
+                            <img src="{{ room.image.url }}" style="height:60px;width: 60px;" class="border border-dark-subtle col-md-1 rounded-circle" alt="">
+                        {% endif %}
+                        <a href="{% url "chatroom" room.name %}" class="text-decoration-none text-dark">
+                            {% if not room.is_group %}
+                                {% if room.members.last == user %}
+                                    {{ room.members.first.username }}
                                 {% else %}
-                                <div class="col-md-9">
-                                    <h5>Message a User for the message area to apear</h5>
-                                </div>
+                                    {{ room.members.last.username }}
                                 {% endif %}
+                            {% else %}
+                                {{ room.name }}
+                            {% endif %}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="m-2">
+                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#MessageUserModal">Message User</button>
+                </div>
+                <!-- Message User Modal -->
+                <div class="modal fade" id="MessageUserModal" tabindex="-1" aria-labelledby="MessageUserModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="MessageUserModalLabel">Message User</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="{% url "messageUser" %}">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="username" class="form-label">Username</label>
+                                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter the Username" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message" class="form-label">Message</label>
+                                        <textarea class="form-control" id="message" rows="3" placeholder="Enter your message" name="message" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-2">
+                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#GroupModal">Create Group</button>
+                </div>
+                <!-- Create Group Modal -->
+                <div class="modal fade" id="GroupModal" tabindex="-1" aria-labelledby="GroupModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="GroupModalLabel">Create Group</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" enctype='multipart/form-data' action="{% url "createGroup" %}">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="group-picture" class="form-label">Group Picture: </label>
+                                        <input type="file" class="form-control" id="group-picture" name="group_picture" placeholder="Upload Group Picture">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="group-name" class="form-label">Group Name</label>
+                                        <input type="text" class="form-control" id="group-name" name="groupname" placeholder="Enter Group Name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="group-description" class="form-label">Group Description</label>
+                                        <input type="text" class="form-control" id="group-description" name="description" placeholder="(optional)">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="group-members" class="form-label">Add Members</label>
+                                        <input type="text" class="form-control" id="group-members" name="members" placeholder="Enter usernames separated by commas" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-md-9" style="width: 1250px;">
+            {% if room_name is not None %}
+            <!-- Chat Box -->
+            <div class="card border border-dark-subtle shadow-lg">
+                {% if chatroom.is_group %}
+                <div class="card-header bg-secondary">
+                    <img src="{{ chatroom.image.url }}" style="height:60px;width: 60px;" class="border border-dark-subtle col-md-1 rounded-circle" alt="">
+                    <button class="btn btn-secondary">{{ room_name }}</button>
+                </div>
+                {% else %}
+                <div class="card-header bg-secondary text-white">
+                    {% if chatroom.members.last == user %}
+                        <img src="{{ chatroom.members.first.profile.image.url }}" style="height:60px;width: 60px;" class="border border-dark-subtle col-md-1 rounded-circle" alt="">
+                        <button class="btn btn-secondary"><a class='text-white' href='{% url "userprofile" chatroom.members.first.username %}'>{{ chatroom.members.first.username }}</a></button>
+                    {% else %}
+                        <img src="{{ chatroom.members.last.profile.image.url }}" style="height:60px;width: 60px;" class="border border-dark-subtle col-md-1 rounded-circle" alt="">
+                        <button class="btn btn-secondary"><a class='text-white' href='{% url "userprofile" chatroom.members.last.username %}'>{{ chatroom.members.last.username }}</a></button>
+                    {% endif %}
+                </div>
+                {% endif %}
+                <div class="card-body" style="height:400px; overflow-y: auto;" id="chat-log">
+                </div>
+                <div class="card-footer">
+                    <input class='col-md-10' id="chat-message-input" type="text">
+                    <input class="btn btn-secondary" id="chat-message-submit" type="button" value="Send">
+                </div>
+            </div>
+            {% else %}
+            <div class="col-md-9">
+                <h5>Message a User for the message area to appear</h5>
+            </div>
+            {% endif %}
+        </div>
     </div>
 </div>
-
 {% endblock content %}
 {% block javascript %}
 <script>

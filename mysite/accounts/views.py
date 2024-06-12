@@ -70,10 +70,11 @@ def userprofileEdit(request):
         try:
             userprofile, created = Profile.objects.get_or_create(user=user)
             userprofile.bio = bio
-            if profile_pic:
-                userprofile.image = profile_pic
+            userprofile.image = profile_pic
             userprofile.save()
-            user.username = username
+            print(profile_pic)
+            if username:
+                user.username = username
             user.save()
             return redirect('home')
         except IntegrityError:

@@ -5,19 +5,19 @@
         <div class="card-header bg-secondary text-white fs-2">
             Edit your Profile
         </div>
-        <form class='card-body' action="" method="post">
+        <form class='card-body' action="{% url "userprofileEdit" %}" enctype='multipart/form-data' method="post">
             {% csrf_token %}
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Username</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="{{user.username}} is your current Username" name="username" aria-describedby="emailHelp" required>
+                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="{{user.username}} is your current Username" name="username" aria-describedby="emailHelp" >
             </div>
             <div class="m-3">
                 <label for="exampleInputEmail1" class="form-label">Bio</label>
-                <textarea type="text" class="form-control" rows="10" name="bio" placeholder="{{user.profile.bio}}" required></textarea>
+                <textarea type="text" class="form-control" rows="10" name="bio" placeholder="{{user.profile.bio}}" ></textarea>
             </div>
             <div class="m-3">
                 <label for="exampleInputPassword1" class="form-label">Profile Picture</label>
-                <input type="file" class="form-control" id="exampleInputPassword1" name="image" required>
+                <input type="file" class="form-control" id="image" name="image" >
             </div>
             <button type="submit" class="m-2 btn btn-secondary">Submit</button>
         </form>

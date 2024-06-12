@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class ChatRoom(models.Model):
-    name = models.CharField(max_length=20, blank=False, null=False)
+    name = models.CharField(max_length=20, blank=False, null=False,unique=True)
     description = models.TextField(blank=True, null=True)
     is_group = models.BooleanField(default=False)
     members = models.ManyToManyField(User, related_name='chatrooms')

@@ -51,7 +51,7 @@ def create_group(request):
         chat_room = ChatRoom.objects.create(name=groupname,is_group=True,description=description)
         chat_room.members.set(users+[request.user.id])
         chat_room.save()
-        return redirect('chatroom',chat_room_id=chat_room.name)
+        return redirect('chatroom')
     messages.error(request,'Invalid request')
     return redirect('chatbox')
 
